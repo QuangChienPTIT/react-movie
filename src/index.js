@@ -6,13 +6,11 @@ import "slick-carousel/slick/slick-theme.css";
 import "./index.css";
 import App from "./containers/App/App";
 import * as serviceWorker from "./serviceWorker";
-import configStore from "./store/configStore";
-import { Provider } from "react-redux";
-const store = configStore();
+// import configStore from "./store/configStore";
+// import { Provider } from "react-redux";
+// const store = configStore();
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+    <App />,
   document.getElementById("root")
 );
 

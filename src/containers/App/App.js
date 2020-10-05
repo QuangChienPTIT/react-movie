@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import routes from "../../routes";
 
@@ -9,8 +9,8 @@ const renderRoutes = (routes) => {
     return (
       <Route
         key={index}
-        exact={routeItem.exact}
         path={routeItem.path}
+        exact={routeItem.exact}
         component={routeItem.component}
       ></Route>
     );
@@ -20,9 +20,11 @@ const renderRoutes = (routes) => {
 
 function App() {
   return (
-    <div className="App">
-      <Switch>{renderRoutes(routes)}</Switch>
-    </div>
+    <Router>
+      <div className="App">
+        <Switch>{renderRoutes(routes)}</Switch>
+      </div>
+    </Router>
   );
 }
 

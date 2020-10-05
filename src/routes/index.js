@@ -9,9 +9,9 @@ const routes = [
     component: () => <HomePage></HomePage>,
   },
   {
-    path: "/d",
+    path: "/movie-detail/:movieId",
     exact: true,
-    component: () => <MovieDetailPage></MovieDetailPage>,
+    component: ({match}) => <MovieDetailPage match={match}></MovieDetailPage>,
   },
   {
     path: "/category/:categoryName",

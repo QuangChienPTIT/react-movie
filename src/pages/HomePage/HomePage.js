@@ -1,31 +1,36 @@
-import React, { Component } from "react";
-import { getMovieTrending } from "../../apis/TheMovieDBApi";
-import MovieList from "../../components/MovieList/MovieList";
+import React, { Component, Fragment } from "react";
+import * as TheMovieDBApi from "../../apis/TheMovieDBApi";
+import MovieList from "../../containers/MovieList/MovieList";
+import MovieSlider from "../../containers/MovieSlider/MovieSlider"; 
 
 export default class HomePage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      trendingList: [],
-    };
-  }
-  componentDidMount() {
-    getMovieTrending()
-      .then((resp) => {
-        if (resp.status !== 200) {
-          return;
-        }
-        this.setState({
-          trendingList: resp.data.results,
-        });
-      })
-      .catch((err) => console.log(err));
-  }
-  renderTrending = () => {
-    var { trendingList } = this.state;
-    return <MovieList movieList={trendingList} type="slider"></MovieList>;
-  };
   render() {
-    return <div>{this.renderTrending()}</div>;
+    return (
+      <Fragment>
+        <MovieSlider
+          fetchFunction={TheMovieDBApi.getMovieNowPlaying}
+        ></MovieSlider>
+        <MovieList
+          type="slider"
+          title="Trending"
+          fetchFunction={TheMovieDBApi.getMovieTrending}
+        ></MovieList>
+        <MovieList
+          type="slider"
+          title="Top Rated"
+          fetchFunction={TheMovieDBApi.getMovieTopRated}
+        ></MovieList>
+        <MovieList
+          type="slider"
+          title="Popular"
+          fetchFunction={TheMovieDBApi.getMoviePopular}
+        ></MovieList>
+        <MovieList
+          type="slider"
+          title="Up Coming"
+          fetchFunction={TheMovieDBApi.getMovieUpComing}
+        ></MovieList>
+      </Fragment>
+    );
   }
 }

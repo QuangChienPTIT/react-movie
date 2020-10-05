@@ -1,9 +1,27 @@
 import React, { Component, Fragment } from "react";
-import MovieItem from "../MovieItem/MovieItem";
+import MovieItem from "../../components/MovieItem/MovieItem";
 import Slider from "react-slick";
 import "./style.scss";
 
 export default class MovieList extends Component {
+  constructor(props) {
+    super();
+    this.state = {
+      movieList: [],
+    };
+  }
+
+  componentDidMount() {
+    var { fetchFunction } = this.props;
+    fetchFunction().then((resp) => {
+      if (resp.status !== 200) {
+        return;
+      }
+      this.setState({
+        movieList: resp.data.results,
+      });
+    });
+  }
   //render movie with movie list
   renderMovies = (movieList) => {
     var result = "";
@@ -22,7 +40,8 @@ export default class MovieList extends Component {
     return result;
   };
   render() {
-    const { movieList, type, title } = this.props;
+    const { type, title } = this.props;
+    const { movieList } = this.state;
     var movieListEle = "";
     //get settings of slick plugin
     if (type === "slider") {
@@ -46,7 +65,7 @@ export default class MovieList extends Component {
     }
     return (
       <Fragment>
-        <h4 className="movie-list-title">{title}</h4>
+        <h4 className="movie-list-title mt-3">{title}</h4>
         {movieListEle}
       </Fragment>
     );

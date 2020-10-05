@@ -1,3 +1,40 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "~antd/dist/antd.compact.css";
+@import "~antd/dist/antd.dark.css";
+
+img {
+  max-width: 100%;
+}
+
+body{
+    background-color: #111111;;
+}
+
+@font-face {
+  font-family: "SFProDisplay-Regular";
+  src: url(/font/SF-UI-Display-Regular.ttf);
+}
+
+@font-face {
+  font-family: "SFProDisplay-Bold";
+  src: url(/font/SF-UI-Display-Bold.ttf);
+}
+
+@font-face {
+  font-family: "SFProDisplay-Light";
+  src: url(/font/SF-UI-Display-Light.ttf);
+}
+
+@font-face {
+  font-family: "SFProDisplay-SemiBold";
+  src: url(/font/SF-UI-Display-Semibold.ttf);
+}
+
+@font-face {
+  font-family: "SF-Pro-Display-Heavy";
+  src: url(/font/SF-Pro-Display-Heavy.otf);
+}
+
+@font-face {
+  font-family: "UTM AvoBold";
+  src: url(/font/UTM-AvoBold.ttf);
+}

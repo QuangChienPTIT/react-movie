@@ -1,6 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Card } from "antd";
+import { getMovieImage } from "../../apis/TheMovieDBApi";
+import { Link } from "react-router-dom";
+import "./style.scss";
 
 MovieItem.propTypes = {
   name: PropTypes.string,
@@ -8,12 +11,16 @@ MovieItem.propTypes = {
 };
 
 function MovieItem(props) {
+  const { title, id, poster } = props;
+  const movieUrl = `/movie-detail/${id}`;
   return (
-    <Card className="movie-item">
-      <a href="/">
-        <img alt="Thanh xuan co cau" src="https://static.fptplay.net/static/img/share/video/24_09_2020/thanh-xuan-co-cau-poster24-09-2020_15g46-51.jpg?w=282&mode=scale"></img>
-        <p>Thanh xuan co cau</p>
-      </a>
+    <Card className="movie-item" bordered={false}>
+      <Link to={movieUrl} className="img">
+        <img alt={title} src={getMovieImage(poster, "w500")}></img>
+      </Link>
+      <Link to={movieUrl}>
+        <h3>{title}</h3>
+      </Link>
     </Card>
   );
 }
