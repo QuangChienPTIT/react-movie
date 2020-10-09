@@ -1,0 +1,14 @@
+.main-navbar {
+  background-color: #000000;
+  font-weight: 500;
+  .logo {
+    > * {
+      width: 100%;
+      max-width: 100px;
+    }
+  }
+  .menu {
+    background: transparent;    
+  }
+  
+}

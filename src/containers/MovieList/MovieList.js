@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import MovieItem from "../../components/MovieItem/MovieItem";
 import Slider from "react-slick";
 import "./style.scss";
@@ -40,34 +40,41 @@ export default class MovieList extends Component {
     return result;
   };
   render() {
-    const { type, title } = this.props;
+    const { listMode, title } = this.props;
     const { movieList } = this.state;
     var movieListEle = "";
     //get settings of slick plugin
-    if (type === "slider") {
+    if (listMode === "slider") {
       const dataSlick = {
         slidesToShow: 6,
-        slidesToScroll: 3,
+        slidesToScroll: 1,
         swipe: true,
         arrows: false,
+        infinite: false,
+        mobileFirst:true,
+        responsive: [
+          {
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 2,
+            },
+          },
+        ],
       };
+      
       movieListEle = (
-        <Slider {...dataSlick} className="movie-list">
-          {this.renderMovies(movieList)}
-        </Slider>
+        <Slider {...dataSlick}>{this.renderMovies(movieList)}</Slider>
       );
     } else {
       movieListEle = (
-        <div className="movie-list grid row">
-          {this.renderMovies(movieList)}
-        </div>
+        <div className="grid row">{this.renderMovies(movieList)}</div>
       );
     }
     return (
-      <Fragment>
+      <div className="movie-list">
         <h4 className="movie-list-title mt-3">{title}</h4>
         {movieListEle}
-      </Fragment>
+      </div>
     );
   }
 }

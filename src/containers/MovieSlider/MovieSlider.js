@@ -31,7 +31,7 @@ class MovieSlider extends Component {
     if (Array.isArray(movieList)) {
       result = movieList.map((movie, index) => {
         if (!movie.backdrop_path) {
-          return;
+          return '';
         }
         return (
           <div className="movie-slide" key={index}>

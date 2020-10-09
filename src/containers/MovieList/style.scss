@@ -1,11 +1,17 @@
-.movie-list.grid {
-  @media (min-width: 1024px) {
-    > div {
-      width: 16.66%;
+.movie-list {
+  .grid {
+    @media (min-width: 1024px) {
+      > div {
+        max-width: 16.66%;
+        width: 16.66%;
+      }
     }
   }
-}
-.movie-list {
-  margin-left: -0.675rem;
-  margin-right: -0.675rem;
+  .slick-track{
+    margin-left: 0!important;
+  }
+  >div{
+    margin-left: -.675rem;
+    margin-right: -.675rem;
+  }
 }

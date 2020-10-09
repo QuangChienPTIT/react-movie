@@ -48,5 +48,31 @@ export const getMovieUpComing = (language = "vi", page = 1) => {
 };
 
 export const getMovieImage = (img, size = "original") => {
-  return `https://image.tmdb.org/t/p/${size}${img}`;
+  if (typeof img != "undefined") {
+    return `https://image.tmdb.org/t/p/${size}${img}`;
+  }
+};
+
+export const getMovieRecommendations = (movieId, language = "vi", page = 1) => {
+  return AxiosService.get(
+    `${THEMOVIEDB_API_URL}/movie/${movieId}/recommendations?api_key=${THEMOVIEDB_API_KEY}&language=${language}&page=${page}`
+  );
+};
+
+export const getMovieSimilar = (movieId, language = "vi", page = 1) => {
+  return AxiosService.get(
+    `${THEMOVIEDB_API_URL}/movie/${movieId}/similar?api_key=${THEMOVIEDB_API_KEY}&language=${language}&page=${page}`
+  );
+};
+
+export const getMovieDetail = (movieId, language = "vi") => {
+  return AxiosService.get(
+    `${THEMOVIEDB_API_URL}/movie/${movieId}?api_key=${THEMOVIEDB_API_KEY}&language=${language}`
+  );
+};
+
+export const getMovieCast = (movieId) => {
+  return AxiosService.get(
+    `${THEMOVIEDB_API_URL}/movie/${movieId}/credits?api_key=${THEMOVIEDB_API_KEY}`
+  );
 };

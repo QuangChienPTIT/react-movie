@@ -6,7 +6,8 @@ img {
 }
 
 body{
-    background-color: #111111;;
+    background-color: #111111;
+    font-family: "Quicksand", sans-serif;
 }
 
 @font-face {

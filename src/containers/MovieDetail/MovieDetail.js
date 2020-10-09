@@ -1,71 +1,187 @@
 import React, { Component } from "react";
 import { Button } from "antd";
+import "./style.scss";
 import { HeartFilled, ShareAltOutlined } from "@ant-design/icons";
+import * as TheMovieDBApi from "../../apis/TheMovieDBApi";
+import { Link } from "react-router-dom";
 
 export default class MovieDetail extends Component {
+  constructor(props) {
+    super();
+    this.state = {
+      casts: [],
+      crews: [],
+      movieDetail: {},
+    };
+  }
+
+  getMovieDetail = () => {
+    const { movieId } = this.props;
+    this.setState({ movieId });
+    TheMovieDBApi.getMovieDetail(movieId).then((resp) => {
+      if (resp.status !== 200) {
+        return;
+      }
+      this.setState({
+        movieDetail: resp.data,
+      });
+    });
+  };
+  componentDidMount() {
+    this.getMovieDetail();
+    this.getCast();
+  }
+  componentDidUpdate(previousProps, previousState) {
+    if (previousProps.movieId !== this.props.movieId) {
+      this.getMovieDetail();
+      this.getCast();
+    }
+  }
+
+  renderGenres = () => {
+    const { genres } = this.state.movieDetail;
+    var result = "";
+    if (!Array.isArray(genres)) {
+      return;
+    }
+    result = genres.map((genre, index) => {
+      return (
+        <Link key={index} to="/">
+          {genre.name}
+          {index < genres.length - 1 ? ", " : ""}
+        </Link>
+      );
+    });
+    return result;
+  };
+
+  renderCast = () => {
+    const { casts } = this.state;
+    var result = "";
+    if (!Array.isArray(casts)) {
+      return;
+    }
+    result = casts.map((cast, index) => {
+      if (index >= 2) {
+        return;
+      }
+      return (
+        <Link key={index} to="/">
+          {cast.name}
+          {index < casts.length - 1 && index < 1 ? ", " : ""}
+        </Link>
+      );
+    });
+    return result;
+  };
+
+  getCast = () => {
+    const { movieId } = this.props;
+    TheMovieDBApi.getMovieCast(movieId).then((resp) => {
+      this.setState({
+        casts: resp.data.cast,
+        crews: resp.data.crew,
+      });
+    });
+  };
+
+  renderDirector = () => {
+    const { crews } = this.state;
+    if (!Array.isArray(crews) || crews.length < 1) {
+      return;
+    }
+    var director = crews.find((crew) => {
+      if (crew.job.toLowerCase() === "director") {
+        return crew;
+      }
+    });
+    if (director) {
+      return <Link to="/">{director.name}</Link>;
+    }
+  };
+
+  renderCountry = () => {
+    const { production_countries } = this.state.movieDetail;
+    var result = "";
+    if (production_countries) {
+      result = production_countries.map((country, index) => {
+        return (
+          <Link to="" key={index}>
+            {country.name}
+            {index < production_countries.length - 1 && index < 1 ? ", " : ""}
+          </Link>
+        );
+      });
+    }
+    return result;
+  };
+
   render() {
+    var { movieDetail } = this.state;
     return (
-      <div className="movie-detail row">
-        <div className="flex-fill col-lg-2">
-          <img
-            src="https://static.fptplay.net/static/img/share/video/27_08_2020/right-now-wrong-then-poster27-08-2020_17g07-01.jpg?w=282&mode=scale"
-            alt="asd"
-          ></img>
-        </div>
-        <div className="detail-content col-lg-7">
-          <h3>Đúng Ở Hiện Tại, Sai Ở Sau Này - Right Now, Wrong Then</h3>
-          <div className="detail-action">
-            <Button type="primary" icon={<HeartFilled />}>
-              Theo dõi
-            </Button>
-            <Button type="secondary" icon={<ShareAltOutlined />} className="ml-2">
-              Chia sẻ
-            </Button>
+      <div className="movie-detail row mt-3 p-3" style={{background:`url(${TheMovieDBApi.getMovieImage(movieDetail.backdrop_path)}) no-repeat center`}}>
+        <div className="col-md-8 row">
+          <div className="col-md-3 d-none d-md-block p-0 ">
+            <img
+              className="rounded"
+              src={
+                movieDetail.poster_path
+                  ? TheMovieDBApi.getMovieImage(movieDetail.poster_path)
+                  : ""
+              }
+              alt="asd"
+            ></img>
           </div>
-          <div className="detail-description">
-            Right Now, Wrong Then (Đúng Ở Hiện Tại, Sai Ở Sau Này) là bộ phim
-            đầu tiên trong số 5 phim mà nữ diễn viên Kim Min-hee diễn xuất dưới
-            sự chỉ đạo của đạo diễn Hong Sang-soo. Tác phẩm này từng giành
-            Golden Leopard, giải thưởng cao nhất tại Liên hoan phim Locarno. Bên
-            cạnh đó là giải Nam diễn viên chính xuất sắc nhất cho Jung
-            Jae-young. Nội dung phim kể về chuyến đi đến Suwon của Chun-soo. Tại
-            đây, anh gặp gỡ một nữ họa sĩ xinh đẹp tên Hee-jung. Họ ra ngoài ăn
-            tối và uống rượu cùng nhau, tán tỉnh nhau. Thế nhưng sự thật là
-            Chun-soo là người đã có vợ và là cha của hai đứa con. Giới phê bình
-            đánh giá cao và dành nhiều lời khen cho Right now, wrong then
-            .Website điện ảnh Rotten Tomatoes bình luận "bộ phim đưa ra những
-            góc nhìn khác nhau về một cuộc gặp gỡ tình cờ và những quan sát kích
-            thích tư duy về sự tương tác của con người nói chung". Trong khi đó,
-            tờ The Guardian đã xếp bộ phim này vào vị trí thứ 6 trong số những
-            tác phẩm kinh điển của điện ảnh Hàn Quốc hiện đại.
+          <div className="detail-content col-md-9 col-sm-12">
+            <h3>{movieDetail.title}</h3>
+            <div className="detail-action">
+              <Button type="secondary" icon={<HeartFilled />}>
+                Theo dõi
+              </Button>
+              <Button
+                type="danger"
+                icon={<ShareAltOutlined />}
+                className="ml-2"
+              >
+                Chia sẻ
+              </Button>
+            </div>
+            <div className="detail-description mt-3">
+              <h6>Nội dung</h6>
+              <p>{movieDetail.overview}</p>
+            </div>
           </div>
         </div>
-        <div className="detail-options col-lg-3">
+        <div className="detail-options col-md-4">
           <table>
             <tbody>
               <tr>
                 <td>Thời lượng</td>
-                <td>120 phút</td>
+                <td>{movieDetail.runtime} phút</td>
               </tr>
               <tr>
                 <td>Đạo diễn</td>
-                <td>120 phút</td>
+                <td>{this.renderDirector()}</td>
               </tr>
               <tr>
                 <td>Diễn viên</td>
-                <td>120 phút</td>
+                <td>{this.renderCast()}</td>
               </tr>
               <tr>
                 <td>Quốc gia</td>
-                <td>120 phút</td>
+                <td>{this.renderCountry()}</td>
               </tr>
               <tr>
                 <td>Thể loại</td>
-                <td>120 phút</td>
+                <td>{this.renderGenres()}</td>
               </tr>
               <tr>
                 <td>Phát hành</td>
-                <td>120 phút</td>
+                <td>
+                  {movieDetail.release_date
+                    ? movieDetail.release_date.slice(0, 4)
+                    : ""}
+                </td>
               </tr>
             </tbody>
           </table>

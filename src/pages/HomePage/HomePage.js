@@ -11,22 +11,22 @@ export default class HomePage extends Component {
           fetchFunction={TheMovieDBApi.getMovieNowPlaying}
         ></MovieSlider>
         <MovieList
-          type="slider"
+          listMode="slider"
           title="Trending"
           fetchFunction={TheMovieDBApi.getMovieTrending}
         ></MovieList>
         <MovieList
-          type="slider"
+          listMode="slider"
           title="Top Rated"
           fetchFunction={TheMovieDBApi.getMovieTopRated}
         ></MovieList>
         <MovieList
-          type="slider"
+          listMode="slider"
           title="Popular"
           fetchFunction={TheMovieDBApi.getMoviePopular}
         ></MovieList>
         <MovieList
-          type="slider"
+          listMode="slider"
           title="Up Coming"
           fetchFunction={TheMovieDBApi.getMovieUpComing}
         ></MovieList>
