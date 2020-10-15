@@ -6,6 +6,17 @@
     overflow: hidden;
     position: relative;
   }
+  .adult {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    z-index: 1;
+    background: #a50920;
+    color: #fff;
+    padding: 1px 0.5rem;
+    font-size: 0.8rem;
+    border-radius: 2px;
+  }
   .item-link {
     position: absolute;
     top: 0;

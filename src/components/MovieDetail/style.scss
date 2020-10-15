@@ -1,0 +1,131 @@
+.movie-detail {
+  position: relative;
+  z-index: 3;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(17, 17, 17, 0) 0%,
+      rgba(17, 17, 17, 1) 70%
+    );
+  }
+  .detail-content {
+    h3 {
+      font-size: 1.375rem;
+      font-weight: 500;
+    }
+  }
+  .detail-action {
+    button {
+      display: inline-flex;
+      align-items: center;
+    }
+  }
+  .detail-description {
+    h6 {
+      color: #fff;
+      font-weight: 500;
+    }
+    >p {
+      color: #bfbfbf;
+      text-align: justify;
+    }
+    .rate {
+      h6 {
+        color: #fff;
+        font-weight: 500;
+      }
+      span {
+        width: 2rem;
+        height: 2rem;
+        background-color: #081c22;
+        border: 2px solid #21d07a;
+        font-size: 0.875rem;
+      }
+    }
+  }
+  .detail-options {
+    color: #bfbfbf;
+    font-weight: 400;
+    td:first-child {
+      white-space: nowrap;
+      color: #fff;
+      font-weight: 500;
+      padding-right: 1rem;
+      display: flex;
+    }
+    a {
+      color: #bfbfbf;
+    }
+  }
+}
+
+.global-image {
+  height: 700px;
+  position: relative;
+  margin-bottom: -200px;
+  &:after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(17, 17, 17, 0) 0%,
+      rgba(17, 17, 17, 1) 86%
+    );
+    // z-index: 1;
+  }
+  figure {
+    height: 100%;
+    background-position: center;
+  }
+  a {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 30%;
+    z-index: 2;
+    color: #fff;
+    &:hover {
+      color: #ff6601;
+    }
+    i {
+      position: absolute;
+      font-size: 2.25rem;
+      width: 5rem;
+      height: 5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 40%;
+      background: linear-gradient(#232a2f, #14171b);
+    }
+  }
+}
+
+//responsive
+@media (max-width: 600px) {
+  .global-image {
+    height: 250px;
+    margin-bottom: -100px;
+    a i {
+      font-size: 1.75rem;
+      width: 4rem;
+      height: 4rem;
+    }
+  }
+}

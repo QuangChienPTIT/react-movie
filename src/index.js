@@ -4,13 +4,15 @@ import "antd/dist/antd.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./index.css";
-import App from "./containers/App/App";
+import App from "./components/App/App";
 import * as serviceWorker from "./serviceWorker";
-// import configStore from "./store/configStore";
-// import { Provider } from "react-redux";
-// const store = configStore();
+import configStore from "./store/configStore";
+import { Provider } from "react-redux";
+const store = configStore();
 ReactDOM.render(
-    <App />,
+  <Provider store={store}>
+    <App />
+  </Provider>,
   document.getElementById("root")
 );
 

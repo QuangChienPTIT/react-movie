@@ -1,36 +1,89 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import * as TheMovieDBApi from "../../apis/TheMovieDBApi";
-import MovieList from "../../containers/MovieList/MovieList";
-import MovieSlider from "../../containers/MovieSlider/MovieSlider"; 
+import MovieList from "../../components/MovieList/MovieList";
+import MovieSlider from "../../components/MovieSlider/MovieSlider";
+import { THEMOVIEDB_GENRES } from "../../constants/index";
 
+const dataSlickHoz = {
+  slidesToShow: 4,
+};
 export default class HomePage extends Component {
   render() {
     return (
-      <Fragment>
+      <div className="container">
         <MovieSlider
-          fetchFunction={TheMovieDBApi.getMovieNowPlaying}
+          className="mt-md-3"
+          fetchFunction={TheMovieDBApi.getMovieTrending}
         ></MovieSlider>
         <MovieList
           listMode="slider"
-          title="Trending"
-          fetchFunction={TheMovieDBApi.getMovieTrending}
+          title="Top phim hay"
+          fetchFunction={TheMovieDBApi.getMovieSpecialList}
+          options={{
+            keyword: "top_rated",
+          }}
         ></MovieList>
         <MovieList
           listMode="slider"
-          title="Top Rated"
-          fetchFunction={TheMovieDBApi.getMovieTopRated}
+          imageType="horizontal"
+          dataSlick={dataSlickHoz}
+          title={THEMOVIEDB_GENRES["action"].name}
+          filter={{
+            with_genres: "action",
+            language: "vi",
+          }}
         ></MovieList>
         <MovieList
           listMode="slider"
-          title="Popular"
-          fetchFunction={TheMovieDBApi.getMoviePopular}
+          title="Được quan tâm"
+          fetchFunction={TheMovieDBApi.getMovieSpecialList}
+          options={{
+            keyword: "popular"
+          }}
         ></MovieList>
         <MovieList
           listMode="slider"
-          title="Up Coming"
-          fetchFunction={TheMovieDBApi.getMovieUpComing}
+          title="Sắp ra mắt"
+          fetchFunction={TheMovieDBApi.getMovieSpecialList}
+          options={{
+            keyword: "upcoming",
+          }}
         ></MovieList>
-      </Fragment>
+        <MovieList
+          listMode="slider"
+          imageType="horizontal"
+          dataSlick={dataSlickHoz}
+          title="Phim bộ"
+          type="tv"
+        ></MovieList>
+        <MovieList
+          listMode="slider"
+          title={THEMOVIEDB_GENRES["drama"].name}
+          filter={{
+            with_genres: "drama",
+            language: "vi",
+          }}
+        ></MovieList>
+        <MovieList
+          listMode="slider"
+          title={THEMOVIEDB_GENRES["comedy"].name}
+          filter={{
+            with_genres: "comedy",
+            language: "vi",
+          }}
+        ></MovieList>
+        <MovieList
+          listMode="slider"
+          imageType="horizontal"
+          dataSlick={dataSlickHoz}
+          title={THEMOVIEDB_GENRES["crime"].name}
+          type="tv"
+          filter={{
+            with_genres: "crime",
+            language: "vi",
+          }}
+        ></MovieList>
+      </div>
     );
   }
 }

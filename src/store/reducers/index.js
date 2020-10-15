@@ -1,4 +1,4 @@
 import { combineReducers } from "redux";
-
-const rootReducer = combineReducers({});
+import sidebar from "./sidebar";
+const rootReducer = combineReducers({ sidebar });
 export default rootReducer;

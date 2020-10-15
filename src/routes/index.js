@@ -9,14 +9,19 @@ const routes = [
     component: () => <HomePage></HomePage>,
   },
   {
-    path: "/movie-detail/:movieId",
+    path: "/movie-detail/:type/:movieId",
     exact: true,
     component: ({match}) => <MovieDetailPage match={match}></MovieDetailPage>,
   },
   {
-    path: "/category/:categoryName",
+    path: "/category/:type/:categoryName",
     exact: true,
-    component: () => <CategoryPage></CategoryPage>,
+    component: ({match}) => <CategoryPage match={match}></CategoryPage>,
+  },
+  {
+    path: "/category/:type",
+    exact: true,
+    component: ({match}) => <CategoryPage match={match}></CategoryPage>,
   },
 ];
 

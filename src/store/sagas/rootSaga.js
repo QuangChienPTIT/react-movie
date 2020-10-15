@@ -1,2 +1,2 @@
-function* rootSaga(){};
+function* rootSaga() {}
 export default rootSaga;

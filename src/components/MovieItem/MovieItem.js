@@ -11,14 +11,14 @@ MovieItem.propTypes = {
 };
 
 function MovieItem(props) {
-  const { title, id, poster } = props;
-  const movieUrl = `/movie-detail/${id}`;
+  const { title, id, poster, adult,url } = props;
   return (
-    <Card className="movie-item" bordered={false}>
-      <Link to={movieUrl} className="img">
+    <Card className="movie-item col-6 col-md-4 col-lg-2" bordered={false}>
+      {adult ? <span className="adult">18+</span> : ""}
+      <Link to={url} className="img">
         <img alt={title} src={getMovieImage(poster, "w500")}></img>
       </Link>
-      <Link to={movieUrl}>
+      <Link to={url}>
         <h3>{title}</h3>
       </Link>
     </Card>
