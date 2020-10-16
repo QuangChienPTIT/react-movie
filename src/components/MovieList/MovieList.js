@@ -109,6 +109,9 @@ function MovieList(props) {
   const handlePaginationChange = (page) => {
     setFilter({ ...filter, page: page });
   };
+  if (movieList.length < 1) {
+    return "";
+  }
   return (
     <div
       className={`movie-list ${className ? className : ""} ${
