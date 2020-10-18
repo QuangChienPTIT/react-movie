@@ -8,7 +8,8 @@ import { withRouter } from "react-router-dom";
 class MovieDetailPage extends Component {
   render() {
     const { match } = this.props;
-    const { movieId, type } = match.params;
+    const { movieName, type } = match.params;
+    const movieId = movieName.split("-").pop();
 
     return (
       <Fragment>

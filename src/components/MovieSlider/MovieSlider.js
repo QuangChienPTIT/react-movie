@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
 import { getMovieImage } from "../../apis/TheMovieDBApi";
+import { stringToSlug } from "../../constants/helper";
 import "./style.scss";
 
 function MovieSlider(props) {
@@ -38,9 +39,10 @@ function MovieSlider(props) {
         if (!movie.backdrop_path) {
           return "";
         }
-        var movieUrl = `/movie-detail/${
+        let title = movie.title || movie.original_name || movie.original_title;
+        let movieUrl = `/detail/${
           movie.media_type ? movie.media_type : "movie"
-        }/${movie.id}`;
+        }/${stringToSlug(title)}-${movie.id}`;
         return (
           <div className={className} key={index}>
             <div>
@@ -52,9 +54,7 @@ function MovieSlider(props) {
               </Link>
               <div className="content p-3 px-md-5 py-md-3">
                 <Link to={movieUrl} className="slide-link">
-                  <h3>
-                    {movie.title || movie.original_name || movie.original_title}
-                  </h3>
+                  <h3>{title}</h3>
                 </Link>
                 <div className="rate d-flex align-items-center">
                   <p className="m-0 mr-2">Rating</p>

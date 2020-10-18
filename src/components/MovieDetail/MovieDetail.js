@@ -7,19 +7,19 @@ import * as TheMovieDBApi from "../../apis/TheMovieDBApi";
 import { Link } from "react-router-dom";
 
 function MovieDetail(props) {
-  const [state, setState] = useState({ movieDetail:{}, movieVideo:{}, casts:null, crews:null });
-  const { casts, crews, movieDetail, movieVideo } = state;
+  const [state, setState] = useState({ movieDetail:{}, video:{}, casts:null, crews:null });
+  const { casts, crews, movieDetail, video } = state;
   const { movieId } = props;
 
   const getData = async () => {
     const movieDetailRes = await TheMovieDBApi.getMovieDetail(movieId, "vi");
-    const movieVideoRes = await TheMovieDBApi.getMovieVideo(movieId);
+    const videoRes = await TheMovieDBApi.getMovieVideo(movieId);
     const movieCastRes = await TheMovieDBApi.getMovieCast(movieId);
     setState({
       movieDetail: movieDetailRes.data,
-      movieVideo: movieVideoRes.data,
-      movieCast: movieCastRes.data.cast,
-      movicrewseCast: movieCastRes.data.crew,
+      video: videoRes.data.results[0],
+      casts: movieCastRes.data.cast,
+      crews: movieCastRes.data.crew,
     });
   };
   useEffect(() => {
@@ -113,7 +113,7 @@ function MovieDetail(props) {
           target="_blank"
           rel="noopener noreferrer"
           href={`https://www.youtube.com/watch?v=${
-            movieVideo.key ? movieVideo.key : ""
+            video.key ? video.key : ""
           }`}
         >
           <i className="fas fa-play"></i>

@@ -24,7 +24,7 @@ const renderRoutes = (routes) => {
 
 function App() {
   return (
-    <Router>
+    <Router basename={process.env.PUBLIC_URL}>
       <ScrollToTop></ScrollToTop>
       <NavBar></NavBar>
       <MobileHeader className="d-md-none"></MobileHeader>

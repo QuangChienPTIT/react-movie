@@ -12,7 +12,7 @@ export default function NavBar(props) {
         <img src={logo} alt="The movie db"></img>
       </Link>
       <Menu mode="horizontal"></Menu>
-      <div className="navbar-action d-flex align-item-center">
+      <div className="navbar-action d-flex align-item-center" style={{opacity:0}}>
         <SearchOutlined className="mr-2 d-flex align-items-center" />
         <GiftOutlined className="mr-2 d-flex align-items-center" />
         <span className="mr-2">Đăng nhập</span>

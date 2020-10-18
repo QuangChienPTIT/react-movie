@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import MovieItem from "../MovieItem/MovieItem";
 import { Pagination } from "antd";
 import Slider from "react-slick";
+import { stringToSlug } from "../../constants/helper";
 import * as TheMovieDBApi from "../../apis/TheMovieDBApi";
 import "./style.scss";
 function MovieList(props) {
@@ -41,7 +42,7 @@ function MovieList(props) {
     return () => {
       isCancelled = true;
     };
-  }, [filter,options]);
+  }, [filter, options]);
 
   useEffect(() => {
     setFilter(props.filter);
@@ -51,10 +52,11 @@ function MovieList(props) {
     var result = "";
     if (Array.isArray(movieList)) {
       result = movieList.map((movie, index) => {
+        let title = movie.title || movie.original_name || movie.original_title;
         return (
           <MovieItem
             key={index}
-            title={movie.title || movie.original_name || movie.original_title}
+            title={title}
             poster={
               imageType === "horizontal" && movie.backdrop_path
                 ? movie.backdrop_path
@@ -62,7 +64,9 @@ function MovieList(props) {
             }
             adult={movie.adult}
             id={movie.id}
-            url={`/movie-detail/${type ? type : "movie"}/${movie.id}`}
+            url={`/detail/${type ? type : "movie"}/${stringToSlug(
+              title
+            )}-${movie.id}`}
           ></MovieItem>
         );
       });
