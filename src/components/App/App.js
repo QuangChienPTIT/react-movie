@@ -27,7 +27,7 @@ function App() {
     <Router basename={process.env.PUBLIC_URL}>
       <ScrollToTop></ScrollToTop>
       <NavBar></NavBar>
-      <MobileHeader className="d-md-none"></MobileHeader>
+      <MobileHeader className="d-lg-none"></MobileHeader>
       <Sidebar></Sidebar>
       <div className="App">
         <Switch>{renderRoutes(routes)}</Switch>

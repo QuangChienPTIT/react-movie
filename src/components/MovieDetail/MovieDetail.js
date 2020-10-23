@@ -7,7 +7,13 @@ import * as TheMovieDBApi from "../../apis/TheMovieDBApi";
 import { Link } from "react-router-dom";
 
 function MovieDetail(props) {
-  const [state, setState] = useState({ movieDetail:{}, video:{}, casts:null, crews:null });
+  const [state, setState] = useState({
+    movieDetail: {},
+    video: {},
+    casts: null,
+    crews: null,
+  });
+  let componentUnmouted = false;
   const { casts, crews, movieDetail, video } = state;
   const { movieId } = props;
 
@@ -15,15 +21,20 @@ function MovieDetail(props) {
     const movieDetailRes = await TheMovieDBApi.getMovieDetail(movieId, "vi");
     const videoRes = await TheMovieDBApi.getMovieVideo(movieId);
     const movieCastRes = await TheMovieDBApi.getMovieCast(movieId);
-    setState({
-      movieDetail: movieDetailRes.data,
-      video: videoRes.data.results[0],
-      casts: movieCastRes.data.cast,
-      crews: movieCastRes.data.crew,
-    });
+    if (componentUnmouted === false) {
+      setState({
+        movieDetail: movieDetailRes.data,
+        video: videoRes.data.results[0],
+        casts: movieCastRes.data.cast,
+        crews: movieCastRes.data.crew,
+      });
+    }
   };
   useEffect(() => {
     getData();
+    return () => {
+      componentUnmouted = true;
+    };
   }, [props.movieId]);
 
   //render genres of movie
@@ -95,30 +106,35 @@ function MovieDetail(props) {
       });
     }
     return result;
-  };
+  };  
   if (Object.keys(movieDetail) < 1) {
     return "";
   }
   return (
     <>
-      <div className="global-image">
-        <figure
-          style={{
-            backgroundImage: `url(${TheMovieDBApi.getMovieImage(
-              movieDetail.backdrop_path
-            )})`,
-          }}
-        ></figure>
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href={`https://www.youtube.com/watch?v=${
-            video.key ? video.key : ""
-          }`}
-        >
-          <i className="fas fa-play"></i>
-        </a>
-      </div>
+      {video ? (
+        <div className="global-image">
+          <figure
+            style={{
+              backgroundImage: `url(${TheMovieDBApi.getMovieImage(
+                movieDetail.backdrop_path
+              )})`,
+            }}
+          ></figure>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href={`https://www.youtube.com/watch?v=${
+              video.key ? video.key : ""
+            }`}
+          >
+            <i className="fas fa-play"></i>
+          </a>
+        </div>
+      ) : (
+        ""
+      )}
+
       <div className="container">
         <div className="movie-detail row mt-md-3 p-3">
           <div className="col-md-8 p-0 p-md-3">
@@ -211,4 +227,4 @@ MovieDetail.propTypes = {
   movieId: PropTypes.string.isRequired,
 };
 
-export default MovieDetail;
+export default React.memo(MovieDetail);

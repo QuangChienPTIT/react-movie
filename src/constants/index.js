@@ -29,10 +29,6 @@ export const THEMOVIEDB_GENRES = {
     id: 10759,
     name: "Action & Adventure",
   },
-  animation: {
-    id: 16,
-    name: "Phim Hoạt Hình",
-  },
   documentary: {
     id: 99,
     name: "Phim Tài Liệu",
@@ -85,12 +81,12 @@ export const menuLinks = [
     href: "/",
   },
   {
-    title: "Cập nhật",
-    href: "/category/tv/news",
+    title: "Phim tài liệu",
+    href: "/category/movie/documentary",
   },
   {
-    title: "Gia đình",
-    href: "/category/movie/family",
+    title: "Phim Bí ẩn",
+    href: "/category/movie/mystery",
   },
   {
     title: "Phim bộ",
@@ -99,10 +95,6 @@ export const menuLinks = [
   {
     title: "Hành động",
     href: "/category/movie/action",
-  },
-  {
-    title: "Anime",
-    href: "/category/movie/animation",
   },
   {
     title: "Phim lẻ",

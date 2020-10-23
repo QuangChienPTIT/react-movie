@@ -7,29 +7,7 @@ import { stringToSlug } from "../../constants/helper";
 import "./style.scss";
 
 function MovieSlider(props) {
-  const [movieList, setMovieList] = useState([]);
-  const [filter, setFilter] = useState(() => props.filter);
-  const { fetchFunction, options, type } = props;
-  useEffect(() => {
-    let isCancelled = false;
-    fetchFunction({ filter: { ...filter }, ...options, type })
-      .then((resp) => {
-        if (!isCancelled) {
-          if (resp.status !== 200) {
-            return;
-          }
-          setMovieList(resp.data.results);
-        }
-      })
-      .catch((err) => {
-        if (!isCancelled) {
-          console.log("call api get movielist fail", err);
-        }
-      });
-  }, [filter, type]);
-  useEffect(() => {
-    setFilter(props.filter);
-  }, [props.filter]);
+  const { movieList } = props;
 
   const renderMovies = (movieList) => {
     var result = "";
@@ -86,11 +64,8 @@ function MovieSlider(props) {
 }
 
 MovieSlider.propTypes = {
-  fetchFunction: PropTypes.func.isRequired,
+  movieList: PropTypes.array,
   classNmae: PropTypes.string,
-};
-MovieSlider.defaultProps = {
-  filter: {},
 };
 
 export default MovieSlider;

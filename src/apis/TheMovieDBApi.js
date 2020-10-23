@@ -1,18 +1,16 @@
 import { THEMOVIEDB_API_KEY, THEMOVIEDB_API_URL } from "../constants/index";
 import AxiosService from "../commons/AxiosService";
 import { THEMOVIEDB_GENRES } from "../constants/index";
+import merge from "deepmerge";
 import queryString from "query-string";
 
-export const getMovieTrending = (options) => {
+export const getMovieTrending = (options={}) => {
   const default_options = {
     media_type: "all",
     time_window: "day",
   };
   //marge filter
-  const parsed_options = {
-    ...default_options,
-    ...options,
-  };
+  const parsed_options = merge(default_options, options);
   const { media_type, time_window } = parsed_options;
   return AxiosService.get(
     `${THEMOVIEDB_API_URL}/trending/${media_type}/${time_window}?api_key=${THEMOVIEDB_API_KEY}`
@@ -24,12 +22,8 @@ export const getMovieSpecialList = (options) => {
     filter: { language: "vi", page: 1 },
     type: "movie",
   };
-  //marge filter
-  const parsed_options = {
-    ...default_options,
-    ...options,
-    ...{ filter: { ...default_options.filter, ...options.filter } },
-  };
+  //merge filter
+  const parsed_options = merge(default_options, options);
   //get filter url
   if (THEMOVIEDB_GENRES[parsed_options.filter["with_genres"]]) {
     parsed_options.filter["with_genres"] =
@@ -46,15 +40,11 @@ export const getMovieSpecialList = (options) => {
 
 export const getMovieRelatedList = (options) => {
   const default_options = {
-    filter: { language: "vi"},
+    filter: { language: "vi" },
     type: "movie",
   };
-  //marge filter
-  const parsed_options = {
-    ...default_options,
-    ...options,
-    ...{ filter: { ...default_options.filter, ...options.filter } },
-  };
+  //merge filter
+  const parsed_options = merge(default_options, options);
   const { type, movieId, keyword } = parsed_options;
   const stringified = queryString.stringify(parsed_options.filter);
   return AxiosService.get(
@@ -69,12 +59,8 @@ export const getMovieList = (options) => {
     filter: { language: "vi", page: 1 },
     type: "movie",
   };
-  //marge filter
-  const parsed_options = {
-    ...default_options,
-    ...options,
-    ...{ filter: { ...default_options.filter, ...options.filter } },
-  };
+  //merge filter
+  const parsed_options = merge(default_options, options);
   //get filter url
   if (THEMOVIEDB_GENRES[parsed_options.filter["with_genres"]]) {
     parsed_options.filter["with_genres"] =

@@ -13,23 +13,28 @@ function TvDetail(props) {
   });
   const { casts, crews, tvDetail, tvVideo } = state;
   const { tvId } = props;
-
+  let isComponentUnmounted = false;
   //fetch data
   const getData = async () => {
     const tvDetailRes = await TheMovieDBApi.getMovieDetail(tvId, "vi", "tv");
     const tvVideoRes = await TheMovieDBApi.getMovieVideo(tvId, "tv");
     const tvCastRes = await TheMovieDBApi.getMovieCast(tvId, "tv");
-    setState({
-      tvDetail: tvDetailRes.data,
-      tvVideo: tvVideoRes.data,
-      casts: tvCastRes.data.cast,
-      crews: tvCastRes.data.crew,
-    });
+    if (isComponentUnmounted === false) {
+      setState({
+        tvDetail: tvDetailRes.data,
+        tvVideo: tvVideoRes.data,
+        casts: tvCastRes.data.cast,
+        crews: tvCastRes.data.crew,
+      });
+    }
   };
-  
+
   //useEffect
   useEffect(() => {
     getData();
+    return () => {
+      isComponentUnmounted = true;
+    };
   }, [props.tvId]);
 
   //render genres of movie
@@ -218,4 +223,4 @@ TvDetail.propTypes = {
   tvId: PropTypes.string.isRequired,
 };
 
-export default TvDetail;
+export default React.memo(TvDetail);

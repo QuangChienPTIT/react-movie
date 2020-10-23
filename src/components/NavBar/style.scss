@@ -1,6 +1,9 @@
 .main-navbar {
   background-color: #000000;
   font-weight: 500;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
   .logo {
     > * {
       width: 100%;
