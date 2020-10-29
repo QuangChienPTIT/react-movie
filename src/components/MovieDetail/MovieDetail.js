@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Button } from "antd";
 import "./style.scss";
-import { HeartFilled, ShareAltOutlined } from "@ant-design/icons";
+import {
+  HeartFilled,
+  ShareAltOutlined,
+  LoadingOutlined,
+} from "@ant-design/icons";
 import * as TheMovieDBApi from "../../apis/TheMovieDBApi";
 import { Link } from "react-router-dom";
 
@@ -12,8 +16,9 @@ function MovieDetail(props) {
     video: {},
     casts: null,
     crews: null,
+    loading: true,
   });
-  let componentUnmouted = false;
+  let componentUnmounted = false;
   const { casts, crews, movieDetail, video } = state;
   const { movieId } = props;
 
@@ -21,19 +26,27 @@ function MovieDetail(props) {
     const movieDetailRes = await TheMovieDBApi.getMovieDetail(movieId, "vi");
     const videoRes = await TheMovieDBApi.getMovieVideo(movieId);
     const movieCastRes = await TheMovieDBApi.getMovieCast(movieId);
-    if (componentUnmouted === false) {
+    if (componentUnmounted === false) {
       setState({
         movieDetail: movieDetailRes.data,
         video: videoRes.data.results[0],
         casts: movieCastRes.data.cast,
         crews: movieCastRes.data.crew,
+        loading: false,
       });
     }
   };
   useEffect(() => {
+    setState({
+      movieDetail: {},
+      video: {},
+      casts: null,
+      crews: null,
+      loading: true,
+    });
     getData();
     return () => {
-      componentUnmouted = true;
+      componentUnmounted = true;
     };
   }, [props.movieId]);
 
@@ -106,9 +119,9 @@ function MovieDetail(props) {
       });
     }
     return result;
-  };  
-  if (Object.keys(movieDetail) < 1) {
-    return "";
+  };
+  if (state.loading===true) {
+    return <div className="loading"><LoadingOutlined /></div>;
   }
   return (
     <>

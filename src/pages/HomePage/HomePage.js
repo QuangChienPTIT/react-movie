@@ -3,11 +3,13 @@ import * as TheMovieDBApi from "../../apis/TheMovieDBApi";
 import MovieList from "../../components/MovieList/MovieList";
 import MovieSlider from "../../components/MovieSlider/MovieSlider";
 import { THEMOVIEDB_GENRES } from "../../constants/index";
+import { connect } from "react-redux";
+import { setProgressBar } from "../../store/actions";
 
 const dataSlickHoz = {
   slidesToShow: 4,
 };
-export default class HomePage extends Component {
+class HomePage extends Component {
   constructor(props) {
     super(props);
     this.isComponentUnmounted = false;
@@ -24,6 +26,8 @@ export default class HomePage extends Component {
     };
   }
   componentDidMount() {
+    //open loading bar
+    this.props.setProgressBar("OPEN");
     let actionListFetch = TheMovieDBApi.getMovieList({
       filter: {
         with_genres: "action",
@@ -86,6 +90,8 @@ export default class HomePage extends Component {
           trendingList: datas[8].data.results,
         });
       }
+      //close loading bar
+      this.props.setProgressBar("CLOSE");
     });
   }
 
@@ -151,3 +157,11 @@ export default class HomePage extends Component {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setProgressBar: (isOpen) => dispatch(setProgressBar(isOpen)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(HomePage);

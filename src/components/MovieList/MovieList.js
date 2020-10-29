@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import MovieItem from "../MovieItem/MovieItem";
 import Slider from "react-slick";
 import { stringToSlug } from "../../constants/helper";
+import { LoadingOutlined } from "@ant-design/icons";
 import "./style.scss";
 function MovieList(props) {
   const {
@@ -14,6 +15,7 @@ function MovieList(props) {
     type,
     className,
   } = props;
+
   const renderMovies = () => {
     var result = "";
     if (Array.isArray(movieList)) {
@@ -75,8 +77,8 @@ function MovieList(props) {
   } else {
     movieListEle = <div className="grid row">{renderMovies()}</div>;
   }
-  if (Array.isArray(movieList) && movieList.length < 1) {
-    return "";
+  if (movieList.length < 1) {
+    return <div className="loading"><LoadingOutlined /></div>;
   }
   return (
     <div
@@ -99,6 +101,7 @@ MovieList.propTypes = {
 };
 MovieList.defaultProps = {
   type: "movie",
+  movieList: [],
 };
 
 export default React.memo(MovieList);

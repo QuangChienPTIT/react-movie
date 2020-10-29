@@ -1,1 +1,3 @@
 export const TOGGLE_SIDEBAR = "TOGGLE_SIDEBAR";
+export const SET_PROGRESS_BAR = "SET_PROGRESS_BAR";
+

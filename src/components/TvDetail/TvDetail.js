@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Button } from "antd";
-import { HeartFilled, ShareAltOutlined } from "@ant-design/icons";
+import {
+  HeartFilled,
+  ShareAltOutlined,
+  LoadingOutlined,
+} from "@ant-design/icons";
 import * as TheMovieDBApi from "../../apis/TheMovieDBApi";
 import { Link } from "react-router-dom";
 function TvDetail(props) {
@@ -10,6 +14,7 @@ function TvDetail(props) {
     tvVideo: {},
     casts: null,
     crews: null,
+    loading: true,
   });
   const { casts, crews, tvDetail, tvVideo } = state;
   const { tvId } = props;
@@ -25,12 +30,20 @@ function TvDetail(props) {
         tvVideo: tvVideoRes.data,
         casts: tvCastRes.data.cast,
         crews: tvCastRes.data.crew,
+        loading: false,
       });
     }
   };
 
   //useEffect
   useEffect(() => {
+    setState({
+      movieDetail: {},
+      video: {},
+      casts: null,
+      crews: null,
+      loading: true,
+    });
     getData();
     return () => {
       isComponentUnmounted = true;
@@ -102,8 +115,12 @@ function TvDetail(props) {
     }
     return result;
   };
-  if (Object.keys(tvDetail) < 1) {
-    return "";
+  if (state.loading === true) {
+    return (
+      <div className="detail-loading">
+        <LoadingOutlined />
+      </div>
+    );
   }
   return (
     <>

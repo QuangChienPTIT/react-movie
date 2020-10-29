@@ -5,3 +5,8 @@ export const toggleSidebar = () => {
     type: actionKeys.TOGGLE_SIDEBAR,
   };
 };
+
+export const setProgressBar = (isOpen) => ({
+  type: actionKeys.SET_PROGRESS_BAR,
+  isOpen: isOpen,
+});

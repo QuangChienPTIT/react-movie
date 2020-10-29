@@ -11,17 +11,17 @@ const routes = [
   {
     path: "/detail/:type/:movieName",
     exact: true,
-    component: ({match}) => <MovieDetailPage match={match}></MovieDetailPage>,
+    component: ({ match }) => <MovieDetailPage match={match}></MovieDetailPage>,
   },
   {
     path: "/category/:type/:categoryName",
     exact: true,
-    component: ({match}) => <CategoryPage match={match}></CategoryPage>,
+    component: ({ match }) => <CategoryPage match={match}></CategoryPage>,
   },
   {
     path: "/category/:type",
     exact: true,
-    component: ({match}) => <CategoryPage match={match}></CategoryPage>,
+    component: ({ match }) => <CategoryPage match={match}></CategoryPage>,
   },
 ];
 

@@ -2,8 +2,12 @@ import React, { useState, useEffect, useReducer } from "react";
 import * as TheMovieDBApi from "../../apis/TheMovieDBApi";
 import MovieList from "../../components/MovieList/MovieList";
 import MovieSlider from "../../components/MovieSlider/MovieSlider";
+import { LoadingOutlined } from "@ant-design/icons";
+import { connect } from "react-redux";
+import { compose } from "redux";
 import { Pagination } from "antd";
 import { withRouter } from "react-router-dom";
+import { setProgressBar } from "../../store/actions";
 import "./style.scss";
 
 const initState = {
@@ -51,6 +55,8 @@ function CategoryPage(props) {
   let isComponentUnmounted = false;
   //fetch all data
   useEffect(() => {
+    //open loading bar
+    props.setProgressBar("OPEN");
     let movieListFetch = TheMovieDBApi.getMovieList({
       filter: {
         with_genres: category,
@@ -76,6 +82,9 @@ function CategoryPage(props) {
           },
         });
       }
+
+      //close loading bar
+      props.setProgressBar("CLOSE");
     });
     return () => {
       isComponentUnmounted = true;
@@ -102,7 +111,7 @@ function CategoryPage(props) {
   if (Array.isArray(state.movieList) && state.movieList.length === 0) {
     return (
       <div className="container film-null">
-        <h2>LOADING...</h2>
+        <LoadingOutlined></LoadingOutlined>
       </div>
     );
   }
@@ -129,4 +138,13 @@ function CategoryPage(props) {
     </div>
   );
 }
-export default withRouter(CategoryPage);
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setProgressBar: (isOpen) => dispatch(setProgressBar(isOpen)),
+  };
+};
+export default compose(
+  withRouter,
+  connect(null, mapDispatchToProps)
+)(CategoryPage);

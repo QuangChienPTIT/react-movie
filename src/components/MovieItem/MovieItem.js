@@ -12,7 +12,7 @@ MovieItem.propTypes = {
 };
 
 function MovieItem(props) {
-  const { title, id, poster, adult, url } = props;
+  const { title, poster, adult, url, query } = props;
   const image = getMovieImage(poster, "w500");
   return (
     <Card className="movie-item col-6 col-md-4 col-lg-2" bordered={false}>
@@ -20,7 +20,12 @@ function MovieItem(props) {
       <Link to={url} className="img">
         <img alt={title} src={image ? image : noImg}></img>
       </Link>
-      <Link to={url}>
+      <Link
+        to={{
+          pathname: url,
+          query: query,
+        }}
+      >
         <h3>{title}</h3>
       </Link>
     </Card>

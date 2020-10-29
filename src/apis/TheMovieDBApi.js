@@ -6,14 +6,14 @@ import queryString from "query-string";
 
 export const getMovieTrending = (options={}) => {
   const default_options = {
-    media_type: "all",
+    media_type: "tv",
     time_window: "day",
   };
   //marge filter
   const parsed_options = merge(default_options, options);
   const { media_type, time_window } = parsed_options;
   return AxiosService.get(
-    `${THEMOVIEDB_API_URL}/trending/${media_type}/${time_window}?api_key=${THEMOVIEDB_API_KEY}`
+    `${THEMOVIEDB_API_URL}/trending/${media_type}/${time_window}?api_key=${THEMOVIEDB_API_KEY}&adult=false`
   );
 };
 

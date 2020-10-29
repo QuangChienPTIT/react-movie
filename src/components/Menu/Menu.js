@@ -16,7 +16,7 @@ function Menu(props) {
           >
             {menu.sub.map((item, i) => {
               return (
-                <MenuAnt.Item key={i}>
+                <MenuAnt.Item key={`sub-item${i}`}>
                   <Link to={item.href}>{item.title}</Link>
                 </MenuAnt.Item>
               );

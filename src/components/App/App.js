@@ -1,11 +1,13 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { HashRouter, Switch, Route } from "react-router-dom";
 import "./App.css";
 import NavBar from "../NavBar/NavBar";
 import MobileHeader from "../MobileHeader/MobileHeader";
 import Sidebar from "../Sidebar/Sidebar";
 import ScrollToTop from "../ScrollToTop/ScrollToTop";
-import routes from "../../routes"; 
+import ProgressBar from '../ProgressBar/ProgressBar'
+import routes from "../../routes";
+
 
 const renderRoutes = (routes) => {
   var result = "";
@@ -24,15 +26,16 @@ const renderRoutes = (routes) => {
 
 function App() {
   return (
-    <Router basename={process.env.PUBLIC_URL}>
+    <HashRouter>
       <ScrollToTop></ScrollToTop>
       <NavBar></NavBar>
       <MobileHeader className="d-lg-none"></MobileHeader>
+      <ProgressBar></ProgressBar>
       <Sidebar></Sidebar>
       <div className="App">
         <Switch>{renderRoutes(routes)}</Switch>
       </div>
-    </Router>
+    </HashRouter>
   );
 }
 

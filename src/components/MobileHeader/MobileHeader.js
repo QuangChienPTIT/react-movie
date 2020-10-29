@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { toggleSidebar } from "../../store/actions/sidebar";
+import { toggleSidebar } from "../../store/actions";
 import logo from "../../assets/imgs/logo.png";
 import { Link } from "react-router-dom";
 import "./style.scss";
